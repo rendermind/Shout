@@ -1,0 +1,6 @@
+0.0.3
+    'message' node in config.yml now supports color codes
+0.0.2
+    Added config.yml w/ nodes 'prefix', 'message', & 'delay'
+0.0.1
+    Implemented recurring messages displayed to all players
