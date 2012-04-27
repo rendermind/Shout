@@ -1,3 +1,8 @@
+0.1.0
+    Now supports multiple messages
+    Restructured config.yml in support of multiple messages
+    Updated plugin version from alpha to beta
+    Updated to CraftBukkit 1.2.5-R1.2
 0.0.3
     'message' node in config.yml now supports color codes
 0.0.2

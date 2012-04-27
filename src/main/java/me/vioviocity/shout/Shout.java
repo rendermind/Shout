@@ -3,6 +3,10 @@ package me.vioviocity.shout;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -16,7 +20,8 @@ public class Shout extends JavaPlugin {
     
     protected Pattern chatColorPattern = Pattern.compile("(?i)&([0-9A-F])");
     
-    static String shout = null;
+    //static String shout = null;
+    Set<String> shout = Collections.EMPTY_SET;
     
     static FileConfiguration config = null;
     static File configFile = null;
@@ -40,21 +45,34 @@ public class Shout extends JavaPlugin {
     }
     
     public void scheduleShouts() {
+	// load shouts
+	if (config.isConfigurationSection("shout"))
+	    shout = config.getConfigurationSection("shout").getKeys(false);
+	
         // init variables
-        shout = config.getString("prefix") + config.getString("message");
-        shout = chatColorPattern.matcher(shout).replaceAll("\u00A7$1");
-        int delay = config.getInt("delay") * 20;
-        long offset = 20;
+        //shout = config.getString("prefix") + config.getString("message");
+        //shout = chatColorPattern.matcher(shout).replaceAll("\u00A7$1");
+        //int delay = config.getInt("delay") * 20;
+        //long offset = 20;
         
-        // setup schedule
-        getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
-            public void run() {
-                for(Player each : getServer().getOnlinePlayers()) {
-                    each.sendMessage(shout);
-                }
-                log.info(shout);
-            }
-        }, offset, delay);
+        // setup schedules
+        for (final String each : shout) {
+	    int delay = config.getInt("shout." + each + ".delay") * 20;
+	    getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
+		public void run() {
+		
+		    // init variables
+		    String message = config.getString("prefix") + config.getString("shout." + each + ".message");
+		    message = chatColorPattern.matcher(message).replaceAll("\u00A7$1");
+		
+		    // display shout
+		    for(Player another : getServer().getOnlinePlayers()) {
+			another.sendMessage(message);
+		    }
+		    log.info(message);
+		}
+	    }, delay, delay);
+	}
     }
     
     public FileConfiguration loadShoutConfig() {
