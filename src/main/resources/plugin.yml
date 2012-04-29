@@ -1,4 +1,12 @@
 author: Stephen Monroe (VioVioCity)
 main: me.vioviocity.shout.Shout
 name: Shout
-version: 0.1.0
+version: 0.1.1
+commands:
+  shout:
+    description:
+    usage: /<command> [list]
+permissions:
+  shout.shout:
+    description: Allows use of /shout.
+    default: op

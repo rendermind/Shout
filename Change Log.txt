@@ -1,3 +1,9 @@
+0.1.2
+    Added /shout [del] (shout), removes a shout
+    Added /shout [set] (shout) (delay) (message), adds or changes a shout
+0.1.1
+    Implemented /shout [list], displays list of shouts
+    Now supports Metrics w/ mcstats.org
 0.1.0
     Now supports multiple messages
     Restructured config.yml in support of multiple messages
