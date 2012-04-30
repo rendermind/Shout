@@ -3,3 +3,6 @@ shout:
   default:
     message: Customize default message in config.yml
     delay: 60
+  colored:
+    message: Add &cc&eo&al&9o&dr &fto messages in config.yml
+    delay: 90

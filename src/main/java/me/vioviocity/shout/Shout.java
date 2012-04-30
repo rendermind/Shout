@@ -27,7 +27,7 @@ public class Shout extends JavaPlugin {
     @Override
     public void onDisable() {
         getServer().getScheduler().cancelTasks(this);
-        log.info(this + " is not disabled.");
+        log.info(this + " is now disabled.");
     }
 
     @Override

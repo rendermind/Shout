@@ -12,8 +12,15 @@ class ShoutCommand implements CommandExecutor {
     public ShoutCommand(Shout plugin) {
 	this.plugin = plugin;
     }
+    
+    //Shout shout = new Shout();
 
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
+	// check if player
+	if (!(sender instanceof Player)) {
+	    sender.sendMessage(ChatColor.RED + "Command must be issued in-game.");
+	    return true;
+	}
 	
 	// initialize core variables
 	Player player = (Player) sender;
@@ -28,8 +35,17 @@ class ShoutCommand implements CommandExecutor {
 	    if (args.length > 1)
 		return false;
 	    
+	    // shout [reload]
+	    if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
+		plugin.config = null;
+		plugin.getPluginLoader().disablePlugin(plugin);
+		plugin.getPluginLoader().enablePlugin(plugin);
+		player.sendMessage(ChatColor.GREEN + "Shout reloaded.");
+		return true;
+	    }
+	    
 	    // shout [list]
-	    if (args.length == 1) {
+	    if (args.length == 1 && args[0].equalsIgnoreCase("list")) {
 		String shoutList = "";
 		for (String each : Shout.shout)
 		    shoutList += each + ", ";
