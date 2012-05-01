@@ -5,7 +5,7 @@ version: 0.1.2
 commands:
   shout:
     description:
-    usage: /<command> [list]
+    usage: /<command> [list|reload]
 permissions:
   shout.shout:
     description: Allows use of /shout.
