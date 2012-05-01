@@ -93,7 +93,7 @@ public class Shout extends JavaPlugin {
         return config;
     }
     
-    public void saveShoutConfig() {
+    static public void saveShoutConfig() {
         if (config == null || configFile == null)
             return;
         try {
