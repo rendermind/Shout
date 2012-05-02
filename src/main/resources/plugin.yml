@@ -1,7 +1,7 @@
 author: Stephen Monroe (VioVioCity)
 main: me.vioviocity.shout.Shout
 name: Shout
-version: 1.0.0
+version: 1.0.1
 commands:
   shout:
     description:

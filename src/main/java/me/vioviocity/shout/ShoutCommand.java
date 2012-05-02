@@ -17,30 +17,35 @@ class ShoutCommand implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
 	// check if player
-	if (!(sender instanceof Player)) {
-	    sender.sendMessage(ChatColor.RED + "Command must be issued in-game.");
-	    return true;
-	}
+	Boolean isPlayer = true;
+	if (!(sender instanceof Player))
+	    isPlayer = false;
 	
 	// initialize core variables
-	Player player = (Player) sender;
+	Player player = null;
+	if (isPlayer)
+	    player = (Player) sender;
 	
 	// command handler
 	String cmd = command.getName().toLowerCase();
 	if (cmd.equals("shout")) {
 	    // check permission
-	    if (!Shout.checkPermission("shout.shout", player, true))
-		return true;
+	    if (isPlayer)
+		if (!Shout.checkPermission("shout.shout", player, true))
+		    return true;
 	    // invalid args
 	    if (args.length < 1 || args.length == 3)
 		return false;
 	    
 	    // shout [reload]
 	    if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
+		Shout.log.info("[Shout] Reloading...");
 		Shout.config = null;
 		plugin.getPluginLoader().disablePlugin(plugin);
 		plugin.getPluginLoader().enablePlugin(plugin);
-		player.sendMessage(ChatColor.GREEN + "Shout reloaded.");
+		if (isPlayer)
+		    player.sendMessage(ChatColor.GREEN + "Shout reload complete.");
+		Shout.log.info("[Shout] Reload complete.");
 		return true;
 	    }
 	    
@@ -50,7 +55,11 @@ class ShoutCommand implements CommandExecutor {
 		for (String each : Shout.shout)
 		    shoutList += each + ", ";
 		shoutList = shoutList.substring(0, shoutList.length() - 2);
-		player.sendMessage(ChatColor.GREEN + "Shouts: " + ChatColor.WHITE + shoutList);
+		if (isPlayer) {
+		    player.sendMessage(ChatColor.GREEN + "Shouts: " + ChatColor.WHITE + shoutList);
+		} else {
+		    Shout.log.info("[Shout] Shouts: " + shoutList);
+		}
 		return true;
 	    }
 	    
@@ -72,13 +81,21 @@ class ShoutCommand implements CommandExecutor {
 			// delete shout
 			Shout.config.set("shout." + shoutName, null);
 			Shout.saveShoutConfig();
-			player.sendMessage(ChatColor.RED + "Shout " + each + " deleted.");
+			if (isPlayer) {
+			    player.sendMessage(ChatColor.RED + "Shout " + each + " deleted.");
+			} else {
+			    Shout.log.info("[Shout] Shout " + each + " deleted.");
+			}
 			return true;
 		    }
 		}
 		
 		// shout not found
-		player.sendMessage(ChatColor.RED + "Shout does not exist.");
+		if (isPlayer) {
+		    player.sendMessage(ChatColor.RED + "Shout does not exist.");
+		} else {
+		    Shout.log.info("[Shout] Shout does not exist.");
+		}
 		return true;
 	    }
 	    
@@ -108,7 +125,11 @@ class ShoutCommand implements CommandExecutor {
 			Shout.config.set("shout." + each + ".message", shoutMessage);
 			Shout.config.set("shout." + each + ".delay", shoutDelay * 20);
 			Shout.saveShoutConfig();
-			player.sendMessage(ChatColor.GREEN + "Shout " + each + " reset.");
+			if (isPlayer) {
+			    player.sendMessage(ChatColor.GREEN + "Shout " + each + " reset.");
+			} else {
+			    Shout.log.info("[Shout] Shout " + each + " reset.");
+			}
 			return true;
 		    }
 		}
@@ -117,7 +138,11 @@ class ShoutCommand implements CommandExecutor {
 		Shout.config.set("shout." + shoutName + ".message", shoutMessage);
 		Shout.config.set("shout." + shoutName + ".message", shoutDelay * 20);
 		Shout.saveShoutConfig();
-		player.sendMessage(ChatColor.GREEN + "Shout " + shoutName + " set.");
+		if (isPlayer) {
+		    player.sendMessage(ChatColor.GREEN + "Shout " + shoutName + " set.");
+		} else {
+		    Shout.log.info("[Shout] Shout " + shoutName + " set.");
+		}
 		return true;
 	    }
 	}
