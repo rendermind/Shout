@@ -29,15 +29,17 @@ class ShoutCommand implements CommandExecutor {
 	// command handler
 	String cmd = command.getName().toLowerCase();
 	if (cmd.equals("shout")) {
+	    
 	    // check permission
 	    if (isPlayer)
 		if (!Shout.checkPermission("shout.shout", player, true))
 		    return true;
+	    
 	    // invalid args
 	    if (args.length < 1 || args.length == 3)
 		return false;
 	    
-	    // shout [reload]
+	    // <command> [reload]
 	    if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
 		Shout.log.info("[Shout] Reloading...");
 		Shout.config = null;
@@ -49,7 +51,7 @@ class ShoutCommand implements CommandExecutor {
 		return true;
 	    }
 	    
-	    // shout [list]
+	    // <command> [list]
 	    if (args.length == 1 && args[0].equalsIgnoreCase("list")) {
 		String shoutList = "";
 		for (String each : Shout.shout)
@@ -63,7 +65,7 @@ class ShoutCommand implements CommandExecutor {
 		return true;
 	    }
 	    
-	    // shout [del] (shout)
+	    // <command> [del] (shout)
 	    if (args.length == 2 && args[0].equalsIgnoreCase("del")) {
 		
 		// initialize variables
@@ -99,7 +101,7 @@ class ShoutCommand implements CommandExecutor {
 		return true;
 	    }
 	    
-	    // shout [set] (shout) (delay) (message)
+	    // <command> [set] (shout) (delay) (message)
 	    if (args.length > 3 && args[0].equalsIgnoreCase("set")) {
 		
 		// initialize variables

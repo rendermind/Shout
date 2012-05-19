@@ -48,7 +48,7 @@ public class Shout extends JavaPlugin {
             Metrics metrics = new Metrics(this);
             metrics.start();
         } catch (IOException e) {
-            log.warning("[Nexus] Failed to submit metrics.");
+            log.warning("[Shout] Unable to submit metrics.");
         }
 	
 	log.info(this + " is now enabled.");
@@ -99,7 +99,7 @@ public class Shout extends JavaPlugin {
         try {
             config.save(configFile);
         } catch (IOException e) {
-            log.severe("Unable to save config to " + configFile + '.');
+            log.severe("[Shout] Unable to save config to " + configFile + '.');
         }
     }
     
@@ -108,7 +108,7 @@ public class Shout extends JavaPlugin {
 	if (!player.hasPermission(permission)) {
 	    if (notify) {
 		player.sendMessage(ChatColor.RED + "You do not have permission.");
-		log.info("[Shout] " + player.getName() + " was denied permission to " + permission + '.');
+		log.info("[Shout] " + player.getName() + " is denied permission to " + permission + '.');
 	    }
 	    return false;
 	} else {
