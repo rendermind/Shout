@@ -1,3 +1,5 @@
+1.0.2
+    Updated to CraftBukkit 1.2.5-R3.0
 1.0.1
     /shout command now accessible via the console
     Updated to CraftBukkit 1.2.5-R2.0
